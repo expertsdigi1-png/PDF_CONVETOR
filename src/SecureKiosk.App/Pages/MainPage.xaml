@@ -1,0 +1,260 @@
+<Page
+    x:Class="SecureKiosk.App.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="#080808">
+
+    <Grid x:Name="RootLayout" Background="#080808">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="390" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left navigation -->
+        <Border Grid.Column="0" Background="#050505">
+            <StackPanel Margin="20,18,12,16" Spacing="22">
+                <TextBlock Text="System Manager"
+                           Foreground="#F5F5F5"
+                           FontSize="21"
+                           FontWeight="SemiBold" />
+
+                <TextBlock Text="←" Foreground="#E5E5E5" FontSize="28" Margin="2,0,0,0" />
+                <TextBlock Text="☰" Foreground="#E5E5E5" FontSize="25" Margin="2,0,0,2" />
+
+                <TextBlock Text="⌂   Overview" Foreground="#F2F2F2" FontSize="18" />
+                <TextBlock Text="◇   Terminal Security" Foreground="#F2F2F2" FontSize="17" TextWrapping="Wrap" />
+                <TextBlock Text="♙   User Session" Foreground="#F2F2F2" FontSize="17" TextWrapping="Wrap" />
+                <TextBlock Text="⌁   Network Status" Foreground="#F2F2F2" FontSize="17" TextWrapping="Wrap" />
+                <TextBlock Text="▣   Application Controls" Foreground="#F2F2F2" FontSize="17" TextWrapping="Wrap" />
+
+                <Border Background="#272727" CornerRadius="5" Padding="10,12" Margin="-14,0,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#1685D1" CornerRadius="2" />
+                        <TextBlock Grid.Column="1" Text="▱   Device Security"
+                                   Foreground="White" FontSize="17" Margin="12,0,0,0" />
+                    </Grid>
+                </Border>
+
+                <TextBlock Text="♡   System Health" Foreground="#F2F2F2" FontSize="16" TextWrapping="Wrap" />
+                <TextBlock Text="♧   Station Options" Foreground="#F2F2F2" FontSize="17" />
+                <TextBlock Text="◷   Audit Logs" Foreground="#F2F2F2" FontSize="17" />
+            </StackPanel>
+        </Border>
+
+        <!-- Empty central dashboard area behind the foreground form -->
+        <Border Grid.Column="1" Background="#101010" />
+
+        <!-- Right-hand help/settings panel -->
+        <Border Grid.Column="2" Background="#101010">
+            <StackPanel Margin="22,174,22,18" Spacing="12">
+                <TextBlock Text="System Information" Foreground="#E5E5E5" FontSize="19" />
+                <TextBlock Text="Workstation Help" Foreground="#159CE8" FontSize="17" />
+
+                <TextBlock Text="Station Configuration" Foreground="#E5E5E5" FontSize="18" Margin="0,26,0,0" TextWrapping="Wrap" />
+                <TextBlock Text="Terminal Status" Foreground="#159CE8" FontSize="17" />
+
+                <TextBlock Text="Security Environment" Foreground="#E5E5E5" FontSize="18" Margin="0,34,0,0" TextWrapping="Wrap" />
+                <TextBlock Text="This workstation is managed under secure kiosk policies."
+                           Foreground="#BDBDBD" FontSize="17" TextWrapping="Wrap" LineHeight="24" />
+                <TextBlock Text="Administrator Portal" Foreground="#159CE8" FontSize="17" />
+                <TextBlock Text="Status Dashboard" Foreground="#159CE8" FontSize="17" />
+            </StackPanel>
+        </Border>
+
+        <!-- Top banner -->
+        <Border Grid.Row="0"
+                Grid.ColumnSpan="3"
+                Width="940"
+                Height="110"
+                Background="#000000"
+                BorderBrush="#334155"
+                BorderThickness="1"
+                CornerRadius="5"
+                Padding="16"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,28,0,0">
+
+            <StackPanel VerticalAlignment="Center"
+                        HorizontalAlignment="Stretch"
+                        Spacing="6">
+
+                <TextBlock Text="SECURE KIOSK ACTIVE"
+                           Foreground="#38BDF8"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"/>
+
+                <TextBlock Foreground="#F1F5F9"
+                           FontSize="15"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap">
+                    <Run Text="This workstation is running in locked kiosk mode to prevent unauthorized access."/>
+                </TextBlock>
+
+            </StackPanel>
+        </Border>
+
+        <!-- Main modal form -->
+        <Border Grid.Column="0" Grid.ColumnSpan="3"
+                Width="680" Height="490"
+                MaxWidth="900"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,70,0,0"
+                Background="#F4F4F4"
+                BorderBrush="#8A8A8A"
+                BorderThickness="1"
+                CornerRadius="12"
+                Padding="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Title bar -->
+                <Grid Grid.Row="0" Background="#FAFAFA">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                Spacing="10"
+                                VerticalAlignment="Center"
+                                Margin="22,8,0,8">
+                        <TextBlock Text="System Access Console"
+                                   Foreground="#202020"
+                                   FontSize="20"
+                                   FontWeight="SemiBold" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Spacing="13"
+                                Margin="0,8,22,8">
+                        <TextBlock Text="—" Foreground="#7A58B8" FontSize="24" />
+                        <TextBlock Text="□" Foreground="#1D1D1D" FontSize="20" />
+                        <TextBlock Text="×" Foreground="#E84576" FontSize="28" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Form area -->
+                <Border Grid.Row="1" Background="#303030" Padding="48,18,48,28">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="62" />
+                            <RowDefinition Height="48" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="48" />
+                            <RowDefinition Height="22" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Admin Login"
+                                   Foreground="White" FontSize="26"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                        <TextBlock Grid.Row="1"
+                                   Foreground="#EEEEEE"
+                                   FontSize="16"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Margin="0,8,0,0"
+                                   LineHeight="24">
+                            <Run Text="This workstation is running in kiosk lockdown mode."/>
+                            <LineBreak/>
+                            <Run Text="Enter administrator credentials or passcode to unlock."/>
+                        </TextBlock>
+
+                        <TextBox Grid.Row="2" x:Name="UserNameBox"
+                                 PlaceholderText="User name"
+                                 Height="48" VerticalAlignment="Center"
+                                 Background="#252525" Foreground="White"
+                                 BorderBrush="#A0A0A0" BorderThickness="1"
+                                 Padding="12,8" />
+
+                        <PasswordBox Grid.Row="4" x:Name="PasswordBox"
+                                     PlaceholderText="Password"
+                                     PasswordRevealMode="Hidden"
+                                     Height="48" VerticalAlignment="Center"
+                                     Background="#252525" Foreground="White"
+                                     BorderBrush="#A0A0A0" BorderThickness="1"
+                                     Padding="12,8" />
+
+                        <Button Grid.Row="6" Content="Submit"
+                                Command="{Binding ShowExitCommand}"
+                                Width="150" Height="46"
+                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Background="#303030" Foreground="White"
+                                BorderBrush="#B0B0B0" BorderThickness="1" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Lower-right station callout with IT Team Contact -->
+        <Grid Grid.Column="2"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Right"
+              Margin="0,0,14,78"
+              Width="220"
+              Height="150">
+
+            <Border Background="#1E293B"
+                    BorderBrush="#334155"
+                    BorderThickness="1"
+                    CornerRadius="16"/>
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="5"
+                        Margin="8">
+
+                <TextBlock Text="Station ID"
+                           Foreground="#94A3B8"
+                           FontSize="12"
+                           TextAlignment="Center"/>
+
+                <TextBlock Text="KIOSK-01"
+                           Foreground="#38BDF8"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           TextAlignment="Center"/>
+
+                <TextBlock Text="Contact IT Team"
+                           Foreground="#94A3B8"
+                           FontSize="12"
+                           TextAlignment="Center"/>
+
+                <TextBlock Text="6262626260"
+                           Foreground="#F1F5F9"
+                           FontSize="15"
+                           FontWeight="SemiBold"
+                           TextAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Administrator Exit Button -->
+        <Button Grid.Column="2"
+                Content="Administrator Exit"
+                Command="{Binding ShowExitCommand}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="0,0,20,18"
+                Padding="18,10" />
+    </Grid>
+</Page>
