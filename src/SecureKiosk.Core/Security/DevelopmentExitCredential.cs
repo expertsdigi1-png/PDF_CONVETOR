@@ -22,7 +22,7 @@ public static class DevelopmentExitCredential
     /// is provided and no DPAPI credential file exists.
     /// DO NOT use this value in production deployments.
     /// </summary>
-    internal const string FallbackDevelopmentCode = "5013";
+    internal const string FallbackDevelopmentCode = "1122";
 
     /// <summary>
     /// Returns the effective development exit code.

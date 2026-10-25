@@ -25,7 +25,7 @@ public sealed partial class ExitCodeDialog : ContentDialog
     // kiosk cleanup and authorized-exit sequence.
     public static async Task<bool> TryAuthorizedExitAsync(string enteredCode)
     {
-        if (!string.Equals(enteredCode, "5013", StringComparison.Ordinal))
+        if (!string.Equals(enteredCode, "1122", StringComparison.Ordinal))
         {
             return false;
         }

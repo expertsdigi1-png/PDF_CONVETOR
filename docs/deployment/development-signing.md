@@ -24,4 +24,4 @@ SecureKiosk.CredentialTool.exe rotate
 
 The utility accepts and confirms exactly four numeric digits, stores only a DPAPI-protected salted verifier, and prints no credential material. `setup-kiosk.ps1` refuses to configure kiosk mode unless the utility reports a readable provisioned credential.
 
-For DEBUG builds only, a developer may set `SECUREKIOSK_DEV_EXIT_CODE` to a four-digit test value, for example `5013`. Release builds do not register this fallback and always require a provisioned credential.
+For DEBUG builds only, a developer may set `SECUREKIOSK_DEV_EXIT_CODE` to a four-digit test value, for example `1122`. Release builds do not register this fallback and always require a provisioned credential.

@@ -84,7 +84,7 @@
                         HorizontalAlignment="Stretch"
                         Spacing="6">
 
-                <TextBlock Text="SECURE KIOSK ACTIVE"
+                <TextBlock Text="DEVICE SECURITY "
                            Foreground="#38BDF8"
                            FontSize="14"
                            FontWeight="SemiBold"
@@ -95,7 +95,7 @@
                            FontSize="15"
                            TextAlignment="Center"
                            TextWrapping="Wrap">
-                    <Run Text="This workstation is running in locked kiosk mode to prevent unauthorized access."/>
+                    <Run Text="This workstation is running in locked  mode to prevent unauthorized access."/>
                 </TextBlock>
 
             </StackPanel>
@@ -229,7 +229,7 @@
                            FontSize="12"
                            TextAlignment="Center"/>
 
-                <TextBlock Text="KIOSK-01"
+                <TextBlock Text=""
                            Foreground="#38BDF8"
                            FontSize="18"
                            FontWeight="Bold"
@@ -240,7 +240,7 @@
                            FontSize="12"
                            TextAlignment="Center"/>
 
-                <TextBlock Text="6262626260"
+                <TextBlock Text="1-899-544-2790"
                            Foreground="#F1F5F9"
                            FontSize="15"
                            FontWeight="SemiBold"

@@ -19,25 +19,25 @@ public sealed class ExitAuthorizationServiceTests
     [Fact]
     public async Task Correct_code_authorizes_without_exposing_secret()
     {
-        var store = new MemoryStore(CredentialRecordFor("5013"));
+        var store = new MemoryStore(CredentialRecordFor("1122"));
         var service = new ExitAuthorizationService(store, new MemoryAudit(), maxAttempts: 3);
-        var result = await service.AuthorizeAsync("5013");
+        var result = await service.AuthorizeAsync("1122");
         Assert.Equal(ExitAuthorizationStatus.Authorized, result.Status);
     }
 
     [Fact]
     public async Task Wrong_code_is_denied_and_eventually_rate_limited()
     {
-        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("5013")), new MemoryAudit(), maxAttempts: 2);
+        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("1122")), new MemoryAudit(), maxAttempts: 2);
         Assert.Equal(ExitAuthorizationStatus.Invalid, (await service.AuthorizeAsync("9999")).Status);
         Assert.Equal(ExitAuthorizationStatus.RateLimited, (await service.AuthorizeAsync("9999")).Status);
-        Assert.Equal(ExitAuthorizationStatus.RateLimited, (await service.AuthorizeAsync("5013")).Status);
+        Assert.Equal(ExitAuthorizationStatus.RateLimited, (await service.AuthorizeAsync("1122")).Status);
     }
 
     [Theory]
-    [InlineData("5013", true)]
+    [InlineData("1122", true)]
     [InlineData("501", false)]
-    [InlineData("50130", false)]
+    [InlineData("11220", false)]
     [InlineData("50a3", false)]
     [InlineData("", false)]
     public void Exit_code_requires_exactly_four_numeric_digits(string code, bool expected) =>
@@ -46,9 +46,9 @@ public sealed class ExitAuthorizationServiceTests
     [Fact]
     public async Task Malformed_code_does_not_authorize()
     {
-        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("5013")), new MemoryAudit());
+        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("1122")), new MemoryAudit());
         Assert.Equal(ExitAuthorizationStatus.Invalid, (await service.AuthorizeAsync("501")).Status);
-        Assert.Equal(ExitAuthorizationStatus.Invalid, (await service.AuthorizeAsync("50130")).Status);
+        Assert.Equal(ExitAuthorizationStatus.Invalid, (await service.AuthorizeAsync("11220")).Status);
         Assert.Equal(ExitAuthorizationStatus.Invalid, (await service.AuthorizeAsync("50a3")).Status);
         Assert.Equal(ExitAuthorizationStatus.Invalid, (await service.AuthorizeAsync(string.Empty)).Status);
     }
@@ -57,16 +57,16 @@ public sealed class ExitAuthorizationServiceTests
     public async Task Missing_credential_does_not_authorize()
     {
         var service = new ExitAuthorizationService(new MissingStore(), new MemoryAudit());
-        Assert.Equal(ExitAuthorizationStatus.Invalid, (await service.AuthorizeAsync("5013")).Status);
+        Assert.Equal(ExitAuthorizationStatus.Invalid, (await service.AuthorizeAsync("1122")).Status);
     }
 
     [Fact]
     public void Development_credential_is_disabled_outside_a_development_build()
     {
-        Assert.False(DevelopmentExitCredential.TryGetConfiguredCode(false, "5013", out var productionCode));
+        Assert.False(DevelopmentExitCredential.TryGetConfiguredCode(false, "1122", out var productionCode));
         Assert.Null(productionCode);
-        Assert.True(DevelopmentExitCredential.TryGetConfiguredCode(true, "5013", out var developmentCode));
-        Assert.Equal("5013", developmentCode);
+        Assert.True(DevelopmentExitCredential.TryGetConfiguredCode(true, "1122", out var developmentCode));
+        Assert.Equal("1122", developmentCode);
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public sealed class ExitAuthorizationServiceTests
         using var cancellation = new CancellationTokenSource();
         cancellation.Cancel();
         var service = new ExitAuthorizationService(new MissingStore(), new MemoryAudit());
-        await Assert.ThrowsAsync<OperationCanceledException>(() => service.AuthorizeAsync("5013", cancellation.Token));
+        await Assert.ThrowsAsync<OperationCanceledException>(() => service.AuthorizeAsync("1122", cancellation.Token));
     }
 
     // ── new tests ───────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ public sealed class ExitAuthorizationServiceTests
     [Fact]
     public async Task Three_digit_code_is_rejected()
     {
-        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("5013")), new MemoryAudit());
+        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("1122")), new MemoryAudit());
         var result = await service.AuthorizeAsync("501");
         Assert.Equal(ExitAuthorizationStatus.Invalid, result.Status);
     }
@@ -91,15 +91,15 @@ public sealed class ExitAuthorizationServiceTests
     [Fact]
     public async Task Five_digit_code_is_rejected()
     {
-        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("5013")), new MemoryAudit());
-        var result = await service.AuthorizeAsync("50134");
+        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("1122")), new MemoryAudit());
+        var result = await service.AuthorizeAsync("11224");
         Assert.Equal(ExitAuthorizationStatus.Invalid, result.Status);
     }
 
     [Fact]
     public async Task Non_numeric_code_is_rejected()
     {
-        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("5013")), new MemoryAudit());
+        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("1122")), new MemoryAudit());
         var result = await service.AuthorizeAsync("50a3");
         Assert.Equal(ExitAuthorizationStatus.Invalid, result.Status);
     }
@@ -108,7 +108,7 @@ public sealed class ExitAuthorizationServiceTests
     public async Task Cancel_returns_invalid_without_modifying_lockout_state()
     {
         // Simulates the user dismissing the dialog (enters no code / empty string).
-        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("5013")), new MemoryAudit(), maxAttempts: 5);
+        var service = new ExitAuthorizationService(new MemoryStore(CredentialRecordFor("1122")), new MemoryAudit(), maxAttempts: 5);
         var result = await service.AuthorizeAsync(string.Empty);
         // Must be Invalid, not Authorized or RateLimited.
         Assert.Equal(ExitAuthorizationStatus.Invalid, result.Status);
@@ -146,7 +146,7 @@ public sealed class ExitAuthorizationServiceTests
     public async Task Rate_limited_status_prevents_correct_code_during_lockout()
     {
         var service = new ExitAuthorizationService(
-            new MemoryStore(CredentialRecordFor("5013")),
+            new MemoryStore(CredentialRecordFor("1122")),
             new MemoryAudit(),
             maxAttempts: 1);
 
@@ -155,7 +155,7 @@ public sealed class ExitAuthorizationServiceTests
         Assert.Equal(ExitAuthorizationStatus.RateLimited, firstResult.Status);
 
         // Correct code must be blocked while locked out.
-        var secondResult = await service.AuthorizeAsync("5013");
+        var secondResult = await service.AuthorizeAsync("1122");
         Assert.Equal(ExitAuthorizationStatus.RateLimited, secondResult.Status);
     }
 
